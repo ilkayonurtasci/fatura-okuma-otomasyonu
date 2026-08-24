@@ -1,0 +1,360 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Sana gönderilen fatura/fiş görselini analiz et ve YALNIZCA aşağıdaki JSON formatında düz bir nesne döndür. \nHiçbir markdown (```json gibi) veya iç içe geçmiş (nested) obje kullanma.\n\nİstenen JSON Yapısı:\n{\n  \"satici_adi\": \"Faturadaki firma adı\",\n  \"vergi_no\": \"Vergi/TC Kimlik No (Yoksa 'Bulunamadı')\",\n  \"fatura_no\": \"Fatura veya Fiş No (Yoksa 'Bulunamadı')\",\n  \"tarih\": \"YYYY-AA-GG formatında tarih\",\n  \"urun_adi\": \"Satın alınan ana ürün veya ürünlerin özeti\",\n  \"fiyat\": 0.00,\n  \"ara_toplam\": 0.00,\n  \"kdv\": 0.00,\n  \"genel_toplam\": 0.00,\n  \"odeme_yontemi\": \"Kredi Kartı / Nakit / Havale (Yoksa 'Belirtilmedi')\",\n  \"kategori\": \"Harcamanın kategorisi (Örn: Gıda, Teknoloji, Ulaşım, Genel)\",\n  \"son_iade_tarihi\": \"Fatura tarihinden 14 gün sonrası YYYY-AA-GG (Yoksa 'Takip Edilemiyor')\",\n  \"iade_durumu\": \"Aktif\"\n}",
+        "hasOutputParser": true,
+        "options": {
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "427cd96c-e8a2-4679-bf48-74e69c875e47",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "formTitle": "Fatura Yükleme Ekranı",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Faturayı Buraya Sürükleyiniz",
+              "fieldType": "file",
+              "acceptFileTypes": "image/*"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -256,
+        -96
+      ],
+      "id": "bdea236d-1b65-44de-a70d-d86dfa91d7a0",
+      "name": "On form submission1",
+      "webhookId": "442cdc7e-1418-4cff-bc93-43f0aa4cdec1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        240
+      ],
+      "id": "80d893f9-400e-4f53-beda-61f06af8da56",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "DqUohEHYeb9aXetK",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1CvQn4eGPzkBm-9_UxDuGW4jf4u8C4IYskl7NKsS418U",
+          "mode": "list",
+          "cachedResultName": "Fatura Otomasyonu",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CvQn4eGPzkBm-9_UxDuGW4jf4u8C4IYskl7NKsS418U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sayfa1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CvQn4eGPzkBm-9_UxDuGW4jf4u8C4IYskl7NKsS418U/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "vergi_no": "={{ $json.vergi_no }}",
+            "tarih": "={{ $json.tarih }}",
+            "genel_toplam": "={{ $json.genel_toplam }}",
+            "kdv": "={{ $json.kdv }}",
+            "fiyat": "={{ $json.fiyat }}",
+            "urun_adi": "={{ $json.urun_adi }}",
+            "kategori": "={{ $json.kategori }}",
+            "odeme_yontemi": "={{ $json.odeme_yontemi }}",
+            "son_iade_tarihi": "={{ $json.son_iade_tarihi }}",
+            "iade_durumu": "={{ $json.iade_durumu }}",
+            "fatura_no": "={{ $json.fatura_no }}",
+            "ara _toplam": "={{ $json.ara_toplam }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "vergi_no",
+              "displayName": "vergi_no",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fatura_no",
+              "displayName": "fatura_no",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tarih",
+              "displayName": "tarih",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "urun_adi",
+              "displayName": "urun_adi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fiyat",
+              "displayName": "fiyat",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ara _toplam",
+              "displayName": "ara _toplam",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "kdv",
+              "displayName": "kdv",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "genel_toplam",
+              "displayName": "genel_toplam",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "odeme_yontemi",
+              "displayName": "odeme_yontemi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "kategori",
+              "displayName": "kategori",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "son_iade_tarihi",
+              "displayName": "son_iade_tarihi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "iade_durumu",
+              "displayName": "iade_durumu",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "satici_adi",
+              "displayName": "satici_adi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ara_toplam",
+              "displayName": "ara_toplam",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        896,
+        0
+      ],
+      "id": "bd99cd02-3ea7-47f7-abd9-be70f5e04015",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "apEPsWKrYgRyGGen",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\n\n// AI Agent çıktısı 'output' içinde de gelebilir, doğrudan ana seviyede de gelebilir\nlet rawData = input.output || input;\n\n// Eğer AI Agent veriyi string/metin olarak döndürdüyse JSON'a çevirelim\nif (typeof rawData === 'string') {\n  try {\n    const cleanJson = rawData.replace(/```json/g, '').replace(/```/g, '').trim();\n    rawData = JSON.parse(cleanJson);\n  } catch (e) {\n    rawData = {};\n  }\n}\n\n// Güvenli veri çekme yardımcı fonksiyonu\nconst getVal = (key, fallback) => {\n  if (rawData[key] !== undefined && rawData[key] !== null && rawData[key] !== \"\") {\n    return rawData[key];\n  }\n  return fallback;\n};\n\n// Google Sheets sütun başlıklarınızla BİREBİR eşleşen çıktı\nreturn [{\n  json: {\n    satici_adi: getVal('satici_adi', 'Bulunamadı'),\n    vergi_no: getVal('vergi_no', 'Bulunamadı'),\n    fatura_no: getVal('fatura_no', 'Bulunamadı'),\n    tarih: getVal('tarih', 'Bulunamadı'),\n    urun_adi: getVal('urun_adi', getVal('urunler', 'Bulunamadı')),\n    fiyat: Number(getVal('fiyat', getVal('genel_toplam', 0))),\n    ara_toplam: Number(getVal('ara_toplam', 0)),\n    kdv: Number(getVal('kdv', 0)),\n    genel_toplam: Number(getVal('genel_toplam', 0)),\n    odeme_yontemi: getVal('odeme_yontemi', 'Belirtilmedi'),\n    kategori: getVal('kategori', 'Genel'),\n    son_iade_tarihi: getVal('son_iade_tarihi', 'Takip Edilemiyor'),\n    iade_durumu: getVal('iade_durumu', 'Aktif')\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "5fc67076-4353-41b7-b9b9-57286a25b4ea",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "faturaai",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -272,
+        80
+      ],
+      "id": "56dd69d3-8916-4f12-a9c8-6fda32d1c688",
+      "name": "Webhook",
+      "webhookId": "ecd2531b-2561-433a-a909-ec970c103368"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "4fe44c2d-2c16-475b-b325-5c194aab014a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a1e2cdd2499e36a1739ad0dcf37218198ce667a9d008be582c936d960c6ebf9"
+  },
+  "nodeGroups": [],
+  "id": "CFdZy66W3OAPnDcn",
+  "tags": []
+}
