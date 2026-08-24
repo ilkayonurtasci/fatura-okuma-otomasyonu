@@ -11,7 +11,7 @@ Yetkisiz kişilerin sisteme fatura göndermesini engellemek için personele öze
 
 | Kullanıcı Girişi | Fatura Çekme / Yükleme | İşleme Durumu |
 | :---: | :---: | :---: |
-| ![Giriş Ekranı](docs/login-screen.png) | ![Kamera Arayüzü](docs/camera-screen.png) | ![İşleniyor](docs/processing-screen.png) |
+| ![Giriş Ekranı](docs/login-screen.jpeg) | ![Kamera Arayüzü](docs/camera-screen.jpeg) | ![İşleniyor](docs/processing-screen.jpeg) |
 
 ---
 
