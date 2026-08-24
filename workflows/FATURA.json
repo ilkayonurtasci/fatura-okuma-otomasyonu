@@ -73,14 +73,14 @@
           "value": "1CvQn4eGPzkBm-9_UxDuGW4jf4u8C4IYskl7NKsS418U",
           "mode": "list",
           "cachedResultName": "Fatura Otomasyonu",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CvQn4eGPzkBm-9_UxDuGW4jf4u8C4IYskl7NKsS418U/edit?usp=drivesdk"
+          "cachedResultUrl": "drivelink"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sayfa1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CvQn4eGPzkBm-9_UxDuGW4jf4u8C4IYskl7NKsS418U/edit#gid=0"
+          "cachedResultUrl": "drivelink"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
