@@ -51,7 +51,7 @@ Yapay zeka ve n8n akışından geçen fatura verileri; satıcı adı, vergi numa
 
 ### 1. n8n İş Akışını İçe Aktarma
 1. n8n arayüzünü (`http://localhost:5678`) açın.
-2. `workflows/fatura-okuma-workflow.json` dosyasını n8n içine import edin.
+2. `workflows/FATURA.json` dosyasını n8n içine import edin.
 3. **Google Gemini** ve **Google Sheets** kimlik bilgilerinizi (Credentials) tanımlayın.
 4. Akışı **Active / Published** konumuna getirin.
 
