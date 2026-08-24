@@ -11,21 +11,21 @@ Yetkisiz kişilerin sisteme fatura göndermesini engellemek için personele öze
 
 | Kullanıcı Girişi | Fatura Çekme / Yükleme | İşleme Durumu |
 | :---: | :---: | :---: |
-| ![Giriş Ekranı](docs/images/login-screen.png) | ![Kamera Arayüzü](docs/images/camera-screen.png) | ![İşleniyor](docs/images/processing-screen.png) |
+| ![Giriş Ekranı](docs/login-screen.png) | ![Kamera Arayüzü](docs/camera-screen.png) | ![İşleniyor](docs/processing-screen.png) |
 
 ---
 
 ### 2. n8n İş Akışı (Orkestrasyon)
 Gelen ham görsel ikili veri (binary) olarak karşılanır, Gemini 2.0 Vision modeliyle finansal parametreler ayıklanır ve JavaScript düğümü üzerinden veri temizliği yapılarak Google Sheets / ERP API servisine fırlatılır.
 
-![n8n Workflow](docs/images/n8n-workflow.png)
+![n8n Workflow](docs/n8n-workflow.png)
 
 ---
 
 ### 3. Hedef Sistem / Google Sheets Canlı Veri Kaydı
 Yapay zeka ve n8n akışından geçen fatura verileri; satıcı adı, vergi numarası, fatura numarası, KDV matrahı, iade süresi ve iade durumu gibi 13 farklı muhasebe sütununa saniyeler içinde işlenir.
 
-![Google Sheets Tablo](docs/images/google-sheets-output.png)
+![Google Sheets Tablo](docs/google-sheets-output.png)
 
 ---
 
